@@ -62,6 +62,42 @@ class TestOperations(unittest.TestCase):
         with self.assertRaises(ZeroDivisionError):
             _ = 5 / 0
 
+    # Large numbers addition (overflow to inf)
+    def test_addition_large_numbers(self):
+        self.assertEqual(1e308 + 1e308, float('inf'))
+
+    # Small numbers addition
+    def test_addition_small_numbers(self):
+        self.assertAlmostEqual(1e-308 + 1e-308, 2e-308)
+
+    # Large numbers subtraction
+    def test_subtraction_large_numbers(self):
+        self.assertEqual(1e308 - (-1e308), float('inf'))
+
+    # Multiplication leading to large number within float range
+    def test_multiplication_large_numbers(self):
+        self.assertEqual(1e154 * 1e154, 1e308)
+
+    # Multiplication overflow (inf)
+    def test_multiplication_overflow(self):
+        self.assertEqual(1e309 * 1e309, float('inf'))
+
+    # Division by very small number
+    def test_division_by_small_number(self):
+        self.assertAlmostEqual(1.0 / 1e-308, 1e308)
+
+    # Division with infinity
+    def test_division_inf(self):
+        self.assertEqual(float('inf') / 1, float('inf'))
+
+    # Addition with infinity
+    def test_addition_inf(self):
+        self.assertEqual(float('inf') + 1, float('inf'))
+
+    # Addition with negative infinity
+    def test_addition_neg_inf(self):
+        self.assertEqual(float('-inf') + (-1), float('-inf'))
+
 
 if __name__ == '__main__':
     unittest.main(
